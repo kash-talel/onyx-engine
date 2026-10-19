@@ -19,11 +19,17 @@ if %errorlevel% neq 0 (
     pause
     exit /b 1
 )
-where py >nul 2>&1
+set PYTHON_CMD=python
+where python >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [ERREUR] Python Launcher 'py' n'est pas installe.
-    pause
-    exit /b 1
+    where py >nul 2>&1
+    if %errorlevel% neq 0 (
+        echo [ERREUR] Python n'est pas installe ou n'est pas dans le PATH.
+        pause
+        exit /b 1
+    ) else (
+        set PYTHON_CMD=py
+    )
 )
 echo [OK] Node.js et Python detectes.
 echo.
@@ -51,7 +57,7 @@ echo.
 echo [4/6] Lancement du Backend ONYX (FastAPI)...
 set STANDALONE_MODE=true
 set PYTHONPATH=%CORE_DIR%;%NLP_DIR%;%API_DIR%
-start "ONYX Backend" cmd /k "title ONYX Backend Logs && color 0b && echo [BACKEND] Demarrage... && cd /d "%API_DIR%" && py -m uvicorn onyx_api.main:app --host 0.0.0.0 --port 8000 --reload || (echo [ERREUR] Crash du Backend && pause)"
+start "ONYX Backend" cmd /k "title ONYX Backend Logs && color 0b && echo [BACKEND] Demarrage... && cd /d "%API_DIR%" && %PYTHON_CMD% -m uvicorn onyx_api.main:app --host 0.0.0.0 --port 8000 --reload || (echo [ERREUR] Crash du Backend && pause)"
 echo [OK] Backend lance en arriere-plan.
 echo.
 

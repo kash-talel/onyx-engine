@@ -24,14 +24,14 @@ export default function IoCTable({ actorId, fallbackIocs }: { actorId?: string; 
   const rawIocs = useRealTimeStore((state) => {
     const list: IOC[] = [];
 
-    state.urlhaus?.forEach(i => list.push({ id: i.id || crypto.randomUUID(), type: 'url', value: i.url, source: 'URLhaus', confidence: 95, date: i.date_added || new Date().toISOString() }));
-    state.threatfox?.forEach(i => list.push({ id: i.id || crypto.randomUUID(), type: i.ioc_type?.includes('ip') ? 'ipv4' : i.ioc_type || 'hash', value: i.ioc, source: 'ThreatFox', confidence: i.confidence_level || 90, date: i.first_seen || new Date().toISOString() }));
-    state.circl?.forEach(i => list.push({ id: crypto.randomUUID(), type: i.type || 'unknown', value: i.value, source: 'CIRCL MISP', confidence: 85, date: i.timestamp || i.date || new Date().toISOString() }));
-    state.openphish?.forEach(i => list.push({ id: crypto.randomUUID(), type: 'url', value: i.url, source: 'OpenPhish', confidence: 99, date: i.date || new Date().toISOString() }));
+    state.urlhaus?.forEach(i => list.push({ id: i.id || crypto.randomUUID(), type: 'url', value: i.url || '', source: 'URLhaus', confidence: 95, date: i.date_added || new Date().toISOString() }));
+    state.threatfox?.forEach(i => list.push({ id: i.id || crypto.randomUUID(), type: i.ioc_type?.includes('ip') ? 'ipv4' : i.ioc_type || 'hash', value: i.ioc || '', source: 'ThreatFox', confidence: i.confidence_level || 90, date: i.first_seen || new Date().toISOString() }));
+    state.circl?.forEach(i => list.push({ id: crypto.randomUUID(), type: i.type || 'unknown', value: i.value || '', source: 'CIRCL MISP', confidence: 85, date: i.timestamp || i.date || new Date().toISOString() }));
+    state.openphish?.forEach(i => list.push({ id: crypto.randomUUID(), type: 'url', value: i.url || '', source: 'OpenPhish', confidence: 99, date: i.date || new Date().toISOString() }));
     
     const alienvault = (state as any).alienvault;
     if (alienvault) {
-      alienvault.forEach((i: any) => list.push({ id: crypto.randomUUID(), type: i.type || 'domain', value: i.indicator, source: 'OTX', confidence: 80, date: i.created || new Date().toISOString() }));
+      alienvault.forEach((i: any) => list.push({ id: crypto.randomUUID(), type: i.type || 'domain', value: i.indicator || '', source: 'OTX', confidence: 80, date: i.created || new Date().toISOString() }));
     }
 
     // Include fallback if provided and if we don't have enough live data yet
@@ -40,7 +40,7 @@ export default function IoCTable({ actorId, fallbackIocs }: { actorId?: string; 
         list.push({
           id: i.id || crypto.randomUUID(),
           type: i.type || 'ipv4',
-          value: i.value,
+          value: i.value || '',
           source: i.source || 'Fallback',
           confidence: i.confidence || 90,
           date: i.date_detection || i.timestamp || new Date().toISOString()
@@ -48,9 +48,10 @@ export default function IoCTable({ actorId, fallbackIocs }: { actorId?: string; 
       });
     }
 
-    // Deduplication using Map (last occurrence wins, but we'll sort anyway)
+    // Filter out entries with empty/undefined values, then deduplicate
+    const validList = list.filter(item => item.value);
     const dedupMap = new Map<string, IOC>();
-    list.forEach(item => {
+    validList.forEach(item => {
       dedupMap.set(item.value, item);
     });
 
@@ -62,11 +63,11 @@ export default function IoCTable({ actorId, fallbackIocs }: { actorId?: string; 
   }, [rawIocs]);
 
   const filtered = sortedIocs.filter(ioc => {
-    const matchSearch = ioc.value.toLowerCase().includes(filter.toLowerCase()) || ioc.source.toLowerCase().includes(filter.toLowerCase());
+    const matchSearch = (ioc.value || '').toLowerCase().includes(filter.toLowerCase()) || (ioc.source || '').toLowerCase().includes(filter.toLowerCase());
     
     let matchType = typeFilter === 'all';
     if (!matchType) {
-      const t = ioc.type.toLowerCase();
+      const t = (ioc.type || '').toLowerCase();
       if (typeFilter === 'url') matchType = t.includes('url');
       if (typeFilter === 'ipv4') matchType = t.includes('ip');
       if (typeFilter === 'domain') matchType = t.includes('domain');
@@ -75,7 +76,7 @@ export default function IoCTable({ actorId, fallbackIocs }: { actorId?: string; 
 
     let matchSource = sourceFilter === 'all';
     if (!matchSource) {
-      matchSource = ioc.source.toLowerCase().includes(sourceFilter.toLowerCase());
+      matchSource = (ioc.source || '').toLowerCase().includes(sourceFilter.toLowerCase());
     }
 
     return matchSearch && matchType && matchSource;

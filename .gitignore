@@ -23,6 +23,20 @@ build/
 .env.development.local
 .env.production.local
 .env*.local
+*.env
+
+# --- Test & Linter Cache ---
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+hypothesis/
+
+# --- Media & Video Demo Artifacts ---
+*.webm
+*.mp4
+*.avi
+*.mkv
+_demo_video/
 
 # --- Logs ---
 *.log

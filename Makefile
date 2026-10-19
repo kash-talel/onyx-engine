@@ -63,9 +63,12 @@ dev-dash: ## Run dashboard locally (no Docker)
 	cd onyx-dashboard && npm run dev
 
 # --- Testing ---
-test: ## Run all tests
-	cd onyx-core && python -m pytest tests/ -v
+test: ## Run unit tests
+	cd onyx-core && python -m pytest tests/unit -v
 	cd onyx-api && python -m pytest tests/ -v
+
+test-integration: ## Run integration tests (requires running databases)
+	cd onyx-core && python -m pytest tests/integration -v
 
 lint: ## Run linting (ruff + mypy)
 	cd onyx-core && ruff check . && mypy .
