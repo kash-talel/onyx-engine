@@ -1,4 +1,4 @@
-# 🛡️ Onyx Engine — Autonomous Cyber Threat Intelligence Platform
+# Onyx Engine — Autonomous Cyber Threat Intelligence Platform
 
 [![Build & Test Status](https://img.shields.io/badge/tests-82%20passed-brightgreen?style=for-the-badge&logo=pytest)](https://github.com/kash-talel/onyx-engine)
 [![Python Version](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?style=for-the-badge&logo=python)](https://www.python.org/)
@@ -13,7 +13,7 @@
 
 ---
 
-## 📑 Table of Contents
+##  Table of Contents
 
 - [Executive Summary](#-executive-summary)
 - [System Architecture](#-system-architecture)
@@ -38,7 +38,7 @@
 
 ---
 
-## 🎯 Executive Summary
+##  Executive Summary
 
 Modern cybersecurity operations face an acute signal-to-noise crisis: threat feeds bombard defensive infrastructure with hundreds of thousands of ephemeral, uncurated indicators daily. Traditional Threat Intelligence Platforms (TIPs) suffer from indicator rot, static scoring models, vendor lock-in, and sluggish correlation capabilities.
 
@@ -50,7 +50,7 @@ Modern cybersecurity operations face an acute signal-to-noise crisis: threat fee
 
 ---
 
-## 🏛️ System Architecture
+##  System Architecture
 
 ```mermaid
 flowchart TD
@@ -98,7 +98,7 @@ flowchart TD
 
 ---
 
-## 🔬 Core Engineering Pillars
+##  Core Engineering Pillars
 
 ### 1. Multi-Source OSINT Harvester & TAXII Ingestion
 Onyx Engine integrates with **15+ high-fidelity intelligence feeds** natively:
@@ -165,7 +165,7 @@ Onyx Engine implements a tailored polyglot storage architecture:
 
 ---
 
-## 💻 Technology Stack
+##  Technology Stack
 
 | Domain | Technology / Library | Version | Purpose |
 |---|---|---|---|
@@ -190,7 +190,7 @@ Onyx Engine implements a tailored polyglot storage architecture:
 
 ---
 
-## 📁 Directory Structure
+##  Directory Structure
 
 ```text
 onyx-engine/
@@ -264,7 +264,7 @@ onyx-engine/
 
 ---
 
-## ⚙️ Prerequisites & Environment Configuration
+##  Prerequisites & Environment Configuration
 
 ### System Prerequisites
 - **Node.js**: $\ge 18.18$ (Node 20 LTS recommended)
@@ -314,7 +314,7 @@ OSINT_VIRUSTOTAL_API_KEY=
 
 ---
 
-## 🚀 Installation & Deployment
+##  Installation & Deployment
 
 ### Option A: Production Deployment (Docker Compose)
 To launch the complete distributed stack with all databases, backend, and dashboard containerized:
@@ -370,7 +370,7 @@ For Windows workstations, automated batch scripts manage path resolution, proces
 
 ---
 
-## 🧪 Verification & Automated Test Suite
+##  Verification & Automated Test Suite
 
 Onyx Engine includes an extensive, enterprise-grade test suite covering mathematical decay invariants, Bayesian confidence weights, source reliability matrix properties, and API contract validity.
 
@@ -393,7 +393,7 @@ python -m pytest onyx-api/tests -v
 
 ---
 
-## 🌐 Standards & Interoperability
+##  Standards & Interoperability
 
 | Standard | Specification | Implementation in Onyx |
 |---|---|---|
@@ -407,7 +407,7 @@ python -m pytest onyx-api/tests -v
 
 ---
 
-## 🎓 Academic & Engineering Context
+##  Academic & Engineering Context
 
 This project represents the culmination of advanced engineering and academic research in **Cyber Threat Intelligence, Machine Learning in Defense Systems, and High-Performance Distributed Systems**.
 
@@ -422,6 +422,6 @@ This project represents the culmination of advanced engineering and academic res
 
 ---
 
-## 📜 License
+##  License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for complete details.
