@@ -222,10 +222,18 @@ class STIXBase(BaseModel):
         description="Property-level markings",
     )
 
-    # ONYX-specific extensions (not part of STIX spec)
+    # ONYX-specific extensions (STIX 2.1 §11 Custom Properties)
+    x_onyx_source: str | None = Field(
+        default=None,
+        description="Producer feed or crawler name (Annex A.0.3)",
+    )
+    x_onyx_tags: list[str] = Field(
+        default_factory=list,
+        description="ONYX platform tags for internal categorization",
+    )
     onyx_source: str | None = Field(
         default=None,
-        description="ONYX data source identifier (crawler, feed, manual)",
+        description="ONYX data source identifier (legacy alias for x_onyx_source)",
     )
     onyx_tags: list[str] = Field(
         default_factory=list,
@@ -331,7 +339,7 @@ class Indicator(STIXBase):
     )
     kill_chain_phases: list[KillChainPhase] = Field(default_factory=list)
 
-    # ONYX extensions for IOC enrichment
+    # ONYX extensions for IOC enrichment & Annex A.0.3 STIX 2.1 Custom Properties
     ioc_type: str | None = Field(
         default=None,
         description="Simplified IOC type (ipv4, ipv6, domain, url, md5, sha1, sha256, email, cve)",
@@ -340,6 +348,22 @@ class Indicator(STIXBase):
     severity: str | None = Field(default=None, description="Severity: critical/high/medium/low/info")
     mitre_techniques: list[str] = Field(
         default_factory=list, description="ATT&CK technique IDs (e.g., T1566.001)"
+    )
+    x_onyx_source: str | None = Field(
+        default=None,
+        description="Producer feed, collector, or crawler name (Annex A.0.3)",
+    )
+    x_onyx_mitre_techniques: list[str] = Field(
+        default_factory=list,
+        description="Mapped MITRE ATT&CK technique IDs (Annex A.0.3)",
+    )
+    x_onyx_decay_score: float | None = Field(
+        default=None,
+        description="Algorithmic half-life decay score in unit interval [0.0, 1.0] (Annex A.0.3)",
+    )
+    x_onyx_decay_state: str | None = Field(
+        default=None,
+        description="Indicator life-cycle state: valid | degrading | stale | obsolete (Annex A.0.3)",
     )
 
 

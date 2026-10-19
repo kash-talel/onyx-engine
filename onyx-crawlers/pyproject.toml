@@ -8,8 +8,10 @@ version = "3.0.0"
 description = "ONYX CTI Platform — Dark Web & Clear Web Crawler Modules"
 requires-python = ">=3.12"
 authors = [
-    {name = "Mahdi Ghozzi", email = "ghozzim770@gmail.com"}
+    {name = "Mahdi Ghozzi", email = "ghozzim770@gmail.com"},
+    {name = "Amal Karaoud"}
 ]
+license = {text = "MIT"}
 dependencies = [
     "onyx-core>=3.0.0",
     "scrapy>=2.11,<3.0",

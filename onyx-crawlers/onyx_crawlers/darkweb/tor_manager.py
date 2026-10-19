@@ -42,12 +42,33 @@ class CircuitInfo:
     requests_count: int = 0
 
 
+import math
+import random
+
+
+def sample_lognormal_delay(
+    mu: float = 1.5,
+    sigma: float = 0.5,
+    min_delay: float = 0.8,
+    max_delay: float = 6.0,
+) -> float:
+    """
+    Sample anti-detection delay from a log-normal distribution to mimic human browsing entropy.
+    Derived from Thesis Chapter 3, Section 3.3 and Annex A.0.1:
+    ln(X) ~ N(mu=1.5, sigma=0.5), bounded in [0.8s, 6.0s].
+    """
+    raw = random.lognormvariate(mu, sigma)
+    return max(min_delay, min(raw, max_delay))
+
+
 class TorManager:
     """
     Manages Tor proxy lifecycle, circuit rotation, and health monitoring.
+    Also referenced as TorCircuitRotator in Thesis Chapter 3 & Annex A.0.1.
     
-    Adapted from AIL Framework's crawler circuit management:
-    - Automatic circuit rotation after N requests or T seconds
+    Adapted from AIL Framework & Thesis Chapter 3:
+    - Control port 9051 SIGNAL NEWNYM rotation every 50 requests under asyncio.Lock()
+    - Stochastic log-normal delay sampling for human browsing entropy
     - Identity isolation per crawl target (IsolateDestAddr)
     - Kill-switch: immediately drops all Tor traffic on activation
     - Health check via check.torproject.org API
@@ -227,3 +248,7 @@ class TorManager:
             "rotation_interval_sec": self._rotation_interval,
             "max_requests_per_circuit": self._max_requests_per_circuit,
         }
+
+
+# Official Thesis Specification Alias (Chapter 3, Section 3.3 & Annex A.0.1)
+TorCircuitRotator = TorManager

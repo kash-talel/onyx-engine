@@ -29,7 +29,7 @@ from bs4 import BeautifulSoup
 
 from onyx_core.config import get_config
 from onyx_core.services.redis import RedisService
-from onyx_crawlers.darkweb.tor_manager import TorManager
+from onyx_crawlers.darkweb.tor_manager import TorCircuitRotator, TorManager, sample_lognormal_delay
 
 logger = logging.getLogger("onyx.crawler.darkweb")
 
@@ -76,6 +76,22 @@ class CrawlJob:
     custom_headers: dict[str, str] = field(default_factory=dict)
     tags: list[str] = field(default_factory=list)
     priority: int = 5
+
+
+class ContentDeduplicationMiddleware:
+    """
+    DOM stripping and UTF-8 SHA-256 payload hashing for dark web intelligence deduplication.
+    Implements Thesis Chapter 3, Section 3.4 & Annex A.0.2.
+    """
+
+    @staticmethod
+    def strip_and_hash(html_content: str) -> tuple[str, str]:
+        soup = BeautifulSoup(html_content, "html.parser")
+        for tag in soup(["script", "style", "noscript", "nav", "footer", "header"]):
+            tag.decompose()
+        clean_text = soup.get_text(separator="\n", strip=True)
+        content_hash = hashlib.sha256(clean_text.encode("utf-8", errors="ignore")).hexdigest()
+        return clean_text, content_hash
 
 
 class DarkWebSpider(ABC):
@@ -180,10 +196,13 @@ class DarkWebSpider(ABC):
 
             self._visited.add(url)
 
-            # Anti-detection delay (AIL's pending_seconds pattern + randomization)
-            delay = random.uniform(
-                job.delay_min if job else self.config.request_delay,
-                job.delay_max if job else self.config.request_delay * 2,
+            # Anti-detection delay: stochastic log-normal distribution (Thesis §3.3 & Annex A.0.1)
+            # ln(X) ~ N(mu=1.5, sigma=0.5), bounded to [0.8s, 6.0s]
+            delay = sample_lognormal_delay(
+                mu=1.5,
+                sigma=0.5,
+                min_delay=job.delay_min if job else 0.8,
+                max_delay=job.delay_max if job else 6.0,
             )
             await asyncio.sleep(delay)
 
@@ -266,15 +285,10 @@ class DarkWebSpider(ABC):
                     title_tag = soup.find("title")
                     result.title = title_tag.get_text(strip=True) if title_tag else ""
 
-                    # Clean text extraction (remove scripts, styles)
-                    for tag in soup(["script", "style", "noscript", "nav", "footer", "header"]):
-                        tag.decompose()
-                    result.text = soup.get_text(separator="\n", strip=True)
-
-                    # Content hash for deduplication (AIL's dom-hash pattern)
-                    result.content_hash = hashlib.sha256(
-                        result.text.encode("utf-8", errors="ignore")
-                    ).hexdigest()
+                    # Clean text extraction & SHA-256 payload hashing via ContentDeduplicationMiddleware (Thesis §3.4 & Annex A.0.2)
+                    clean_text, content_hash = ContentDeduplicationMiddleware.strip_and_hash(result.html)
+                    result.text = clean_text
+                    result.content_hash = content_hash
 
                     # Link extraction
                     if self.config.darkweb_enabled:

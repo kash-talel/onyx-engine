@@ -1,7 +1,18 @@
 {
   "name": "onyx-dashboard",
   "version": "3.0.0",
-  "author": "Mahdi Ghozzi <ghozzim770@gmail.com>",
+  "description": "Onyx Engine SOC Cockpit — Next.js 14 Tactical Dashboard for Cyber Threat Intelligence",
+  "author": "Mahdi Ghozzi & Amal Karaoud",
+  "contributors": [
+    { "name": "Mahdi Ghozzi", "email": "ghozzim770@gmail.com", "url": "https://github.com/kash-talel" },
+    { "name": "Amal Karaoud" }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kash-talel/onyx-engine.git"
+  },
+  "homepage": "https://github.com/kash-talel/onyx-engine",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",

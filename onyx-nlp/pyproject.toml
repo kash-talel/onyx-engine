@@ -8,8 +8,10 @@ version = "3.0.0"
 description = "ONYX CTI Platform — NLP/ML Engine for IOC Extraction & ATT&CK Mapping"
 requires-python = ">=3.12"
 authors = [
-    {name = "Mahdi Ghozzi", email = "ghozzim770@gmail.com"}
+    {name = "Mahdi Ghozzi", email = "ghozzim770@gmail.com"},
+    {name = "Amal Karaoud"}
 ]
+license = {text = "MIT"}
 dependencies = [
     "onyx-core>=3.0.0",
     "spacy>=3.7,<4.0",
