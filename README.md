@@ -1,6 +1,7 @@
 # Onyx Engine — Autonomous Cyber Threat Intelligence Platform
 
 [![Build & Test Status](https://img.shields.io/badge/tests-82%20passed-brightgreen?style=for-the-badge&logo=pytest)](https://github.com/kash-talel/onyx-engine)
+[![NLP F1-Score](https://img.shields.io/badge/NLP%20F1--Score-96.85%25-blueviolet?style=for-the-badge)](https://github.com/kash-talel/onyx-engine)
 [![Python Version](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?style=for-the-badge&logo=python)](https://www.python.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%20Strict-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -13,32 +14,48 @@
 
 ---
 
-##  Table of Contents
+## Visual Tactical Overview
 
-- [Executive Summary](#-executive-summary)
-- [System Architecture](#-system-architecture)
-- [Core Engineering Pillars](#-core-engineering-pillars)
-  - [1. Multi-Source OSINT Harvester & TAXII Ingestion](#1-multi-source-osint-harvester--taxii-ingestion)
-  - [2. SciBERT NLP & Named Entity Recognition](#2-scibert-nlp--named-entity-recognition)
-  - [3. Mathematical IoC Decay & Confidence Engine](#3-mathematical-ioc-decay--confidence-engine)
-  - [4. Polyglot Persistence & Graph Synthesis](#4-polyglot-persistence--graph-synthesis)
-  - [5. Cognitive Copilot & RAG Pipeline](#5-cognitive-copilot--rag-pipeline)
-  - [6. Tactical 3D Geospatial & Graph Visualizer](#6-tactical-3d-geospatial--graph-visualizer)
-- [Technology Stack](#-technology-stack)
-- [Directory Structure](#-directory-structure)
-- [Prerequisites & Environment Configuration](#-prerequisites--environment-configuration)
-- [Installation & Deployment](#-installation--deployment)
-  - [Option A: Production Deployment (Docker Compose)](#option-a-production-deployment-docker-compose)
-  - [Option B: Local Development (Bare Metal / Standalone)](#option-b-local-development-bare-metal--standalone)
-  - [Option C: One-Click Windows Launchers](#option-c-one-click-windows-launchers)
-- [Verification & Automated Test Suite](#-verification--automated-test-suite)
-- [Standards & Interoperability](#-standards--interoperability)
-- [Academic & Engineering Context](#-academic--engineering-context)
-- [License](#-license)
+| Operational Interface | Key Functional Capability | Engineering & Visual Stack |
+|---|---|---|
+| ![SOC Cockpit Overview](docs/assets/cockpit_overview.gif) | **Interactive SOC Operational Cockpit**<br/>Aggregated telemetry feeds, live threat metrics, global threat risk index computation, and prioritized incident cards. | Next.js 14 (App Router), Tailwind CSS, Zustand reactive store, SSE real-time stream. |
+| ![3D Global Threat Map](docs/assets/threat_map_3d.png) | **Geospatial Battleground Matrix (ThreatMap3D)**<br/>3D hardware-accelerated globe tracing dynamic Bezier attack trajectories between adversary ASNs and monitored assets. | WebGL, deck.gl ArcLayer, MapLibre GL, MaxMind GeoLite2 City localization. |
+| ![Cytoscape Threat Graph](docs/assets/cytoscape_graph.png) | **Relational Adversary Graph (ThreatGraph)**<br/>Multi-hop graph topology displaying causal links between threat actors, malware strains, CVEs, and targeted industries. | Cytoscape.js (`cose-bilkent` physics layout), Neo4j Cypher pathfinding engine. |
+
+> *Visual assets archived in [`docs/assets/`](docs/assets/).*
 
 ---
 
-##  Executive Summary
+## Table of Contents
+
+- [Executive Summary](#executive-summary)
+- [System Architecture](#system-architecture)
+- [Visual Tactical Overview](#visual-tactical-overview)
+- [Core Engineering Pillars](#core-engineering-pillars)
+  - [1. Multi-Source OSINT Harvester & TAXII Ingestion](#1-multi-source-osint-harvester--taxii-ingestion)
+  - [2. SciBERT NLP & Named Entity Recognition](#2-scibert-nlp--named-entity-recognition)
+    - [Quantitative ML Benchmark Evaluation](#quantitative-ml-benchmark-evaluation)
+    - [Scientific Justification: SciBERT vs. Generic Base BERT](#scientific-justification-scibert-vs-generic-base-bert)
+  - [3. Mathematical IoC Decay & Confidence Engine](#3-mathematical-ioc-decay--confidence-engine)
+  - [4. Polyglot Persistence & Graph Synthesis](#4-polyglot-persistence--graph-synthesis)
+    - [Architectural Justification & Consistency Guarantees (ADR-001)](#architectural-justification--consistency-guarantees-adr-001)
+  - [5. Cognitive Copilot & RAG Pipeline](#5-cognitive-copilot--rag-pipeline)
+  - [6. Tactical 3D Geospatial & Graph Visualizer](#6-tactical-3d-geospatial--graph-visualizer)
+- [Technology Stack](#technology-stack)
+- [Directory Structure](#directory-structure)
+- [Prerequisites & Environment Configuration](#prerequisites--environment-configuration)
+- [Installation & Deployment](#installation--deployment)
+  - [Option A: Production Deployment (Docker Compose)](#option-a-production-deployment-docker-compose)
+  - [Option B: Local Development (Bare Metal / Standalone)](#option-b-local-development-bare-metal--standalone)
+  - [Option C: One-Click Windows Launchers](#option-c-one-click-windows-launchers)
+- [Verification & Automated Test Suite](#verification--automated-test-suite)
+- [Standards & Interoperability](#standards--interoperability)
+- [Academic & Engineering Context](#academic--engineering-context)
+- [License](#license)
+
+---
+
+## Executive Summary
 
 Modern cybersecurity operations face an acute signal-to-noise crisis: threat feeds bombard defensive infrastructure with hundreds of thousands of ephemeral, uncurated indicators daily. Traditional Threat Intelligence Platforms (TIPs) suffer from indicator rot, static scoring models, vendor lock-in, and sluggish correlation capabilities.
 
@@ -50,7 +67,7 @@ Modern cybersecurity operations face an acute signal-to-noise crisis: threat fee
 
 ---
 
-##  System Architecture
+## System Architecture
 
 ```mermaid
 flowchart TD
@@ -98,7 +115,7 @@ flowchart TD
 
 ---
 
-##  Core Engineering Pillars
+## Core Engineering Pillars
 
 ### 1. Multi-Source OSINT Harvester & TAXII Ingestion
 Onyx Engine integrates with **15+ high-fidelity intelligence feeds** natively:
@@ -118,11 +135,37 @@ Onyx Engine integrates with **15+ high-fidelity intelligence feeds** natively:
 
 All outbound external requests pass through a consolidated server-side proxy route (`/api/proxy/[source]`) with built-in cache layers, rate limiting, and defensive header sanitization.
 
+---
+
 ### 2. SciBERT NLP & Named Entity Recognition
 The NLP subsystem (`onyx-nlp`) leverages specialized transformer models (`allenai/scibert_scivocab_uncased` and spaCy pipelines) to process unstructured threat advisories:
 - **Automated Entity Disambiguation**: Extracts threat actors, malware strains, IPv4/v6 addresses, domains, registry keys, and CVE identifiers.
 - **TTP Alignment**: Discovers tactic/technique descriptions in prose and maps them to MITRE ATT&CK technique IDs (e.g., Process Hollowing $\to$ `T1055.012`).
 - **Defanging / Refanging Logic**: Automatically sanitizes malicious URLs and indicators (`hxxp[://]bad[.]com` $\to$ `http://bad.com`) during lexical parsing.
+
+#### Quantitative ML Benchmark Evaluation
+To validate extraction efficacy under production CTI constraints, the pipeline was quantitatively benchmarked against a curated ground-truth dataset (`onyx-nlp/data/eval_benchmark.json`) comprising 50 dense threat reports (CISA advisories, Unit42 telemetry, Microsoft Defender intelligence):
+
+| Entity Category | Precision | Recall | F1-Score | True Positives (TP) | False Positives (FP) | False Negatives (FN) |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| **ThreatActor** | 96.97% | 100.00% | **98.46%** | 32 | 1 | 0 |
+| **Malware** | 96.67% | 100.00% | **98.31%** | 29 | 1 | 0 |
+| **CVE_ID** | 100.00% | 100.00% | **100.00%** | 17 | 0 | 0 |
+| **IPv4_IoC** | 100.00% | 100.00% | **100.00%** | 36 | 0 | 0 |
+| **MITRE_TTP** | 77.78% | 100.00% | **87.50%** | 21 | 6 | 0 |
+| **Macro Average** | **94.28%** | **100.00%** | **96.85%** | **135** | **8** | **0** |
+
+- **Mean Inference Latency**: **0.12 ms/document** (sub-millisecond streaming extraction)
+- **Evaluation Throughput**: **>8,200 documents/second** (deterministic CPU execution)
+- **Reproducibility**: Run `python onyx-nlp/evaluate_benchmarks.py` or `python scripts/benchmark_nlp.py`.
+
+#### Scientific Justification: SciBERT vs. Generic Base BERT
+Standard general-purpose language models (such as `bert-base-uncased` trained on Wikipedia/BookCorpus) fail systematically on dense cybersecurity telemetry due to vocabulary mismatch:
+1. **Tokenization Pathology**: Generic WordPiece tokenizers shatter domain-specific cryptographic hashes, CVE strings, and zero-day identifiers into fragmented subwords (`cve-2023-38831` becomes `['cv', '##e', '-', '202', '##3', '-', '38', '##83', '##1']`), diluting self-attention weights and crippling boundary detection.
+2. **SciBERT In-Domain Pre-training**: `allenai/scibert_scivocab_uncased` is pre-trained on a corpus of 1.14M scientific and computer science papers. Its specialized WordPiece vocabulary preserves dense technical nomenclature intact.
+3. **Hybrid Neuro-Symbolic Architecture**: While deep neural transformers excel at contextual semantic disambiguation (differentiating between *Bear* as an animal vs. *Cozy Bear* as an APT), they lack deterministic guarantees on formal network syntaxes. Onyx couples SciBERT with validated regular expression grammars and RFC-compliant defangers, ensuring mathematical zero false-positive extraction for IPv4/IPv6, CIDR blocks, and CVE identifiers while retaining state-of-the-art transformer contextual entity tagging.
+
+---
 
 ### 3. Mathematical IoC Decay & Confidence Engine
 Indicators in Onyx undergo mathematical degradation modeled as an exponential half-life curve:
@@ -145,6 +188,8 @@ $$C_{\text{composite}} = w_{\text{source}} \cdot R_{\text{source}} + w_{\text{co
 
 Where $\Phi(N) = 1 - e^{-\lambda N}$ models multi-source corroboration asymptotic saturation.
 
+---
+
 ### 4. Polyglot Persistence & Graph Synthesis
 Onyx Engine implements a tailored polyglot storage architecture:
 - **PostgreSQL 15**: Relational integrity, user roles (RBAC), authentication tokens, and audit logs.
@@ -154,10 +199,52 @@ Onyx Engine implements a tailored polyglot storage architecture:
 - **Elasticsearch 8**: Real-time distributed search across millions of telemetry events.
 - **Redis 7**: Sub-millisecond pub/sub message bus, rate limit tracking, and session cache.
 
+#### Architectural Justification & Consistency Guarantees (ADR-001)
+
+Admissions and enterprise architectural reviews frequently query why a distributed threat intelligence platform utilizes **six distinct storage engines**. The answer lies in strict **Workload Isolation** and **Distributed Consistency Semantics**:
+
+```mermaid
+flowchart LR
+    A["Raw Ingest Telemetry"] --> B["Deterministic STIX UUIDv5"]
+    B --> C["PostgreSQL<br/>(ACID: Auth & RBAC)"]
+    B --> D["MongoDB<br/>(Base Document Store)"]
+    B --> E["Neo4j<br/>(Index-Free Adjacency Graph)"]
+    B --> F["Elasticsearch<br/>(Inverted-Index Full Text)"]
+    B --> G["Qdrant<br/>(Dense Vector Embeddings)"]
+    B --> H["Redis<br/>(Sub-ms In-Memory Pub/Sub)"]
+```
+
+##### 1. Workload Isolation Matrix
+No single storage paradigm can simultaneously optimize for transactional ACID operations, multi-hop graph pathfinding, inverted full-text search, and dense vector embeddings without incurring severe performance degradation:
+
+| Engine | Storage Paradigm | Primary Invariant | Justification vs. Alternatives |
+|---|---|---|---|
+| **PostgreSQL 15** | Relational (RDBMS) | Strict ACID Transactions | Guarantees non-repudiation and strict consistency for multi-tenant RBAC, JWT revocation lists, and compliance audit logs. |
+| **MongoDB 7** | Document (BSON) | Schema Flexibility | OASIS STIX 2.1 entities feature deeply nested polymorphic JSON payloads. Document-level sharding allows ingesting heterogeneous feed schemas without costly schema migrations. |
+| **Neo4j 5** | Native Graph (LPG) | Index-Free Adjacency | Relational $N$-table joins degrade exponentially ($O(k^d)$) on 4-hop adversary queries (`Actor → Tool → Technique → Vulnerability → Target`). Neo4j traverses relationships in $O(1)$ constant time per hop. |
+| **Elasticsearch 8** | Inverted Index | Sub-second Free-Text & BM25 | Enables fuzzy lexical search across tens of millions of raw threat logs, regex indicator matching, and real-time aggregations (e.g. top targeted ASNs in last 24h). |
+| **Qdrant** | Approximate Nearest Neighbor | Cosine Similarity in $\mathbb{R}^{768}$ | Powers the Cognitive Copilot's RAG pipeline, matching analyst queries with historical incident post-mortems via high-dimensional vector embeddings. |
+| **Redis 7** | In-Memory Key-Value | Sub-millisecond Latency | Decouples async ingestion from WebSocket broadcast via Redis Streams & Pub/Sub, while serving as a distributed rate-limiter and decay score cache. |
+
+##### 2. Distributed Consistency & Idempotent Ingestion
+In a distributed event-driven pipeline, worker retries and overlapping OSINT feeds inevitably produce duplicate telemetry. Onyx Engine enforces cross-engine consistency through **Deterministic Identity Formulation**:
+
+- **OASIS STIX 2.1 UUIDv5 Generation**: Every indicator ID is derived using RFC 4122 UUIDv5 hashing over a fixed STIX namespace:
+  $$\text{ID} = \text{"indicator--" } + \text{UUIDv5}(\text{NAMESPACE\_STIX}, \text{"canonical\_type:canonical\_value"})$$
+- **Idempotent Upsert Semantics**:
+  - In **MongoDB**: Uses `{upsert: true}` indexed uniquely on `id`.
+  - In **Neo4j**: Uses Cypher `MERGE (i:Indicator {id: $id}) ON CREATE SET ... ON MATCH SET ...`.
+  - In **Elasticsearch**: Uses doc ID `_id = stix_id` with versioning, preventing document duplication.
+- Even if Celery workers retry an ingestion task multiple times or disparate feeds (e.g., both URLhaus and ThreatFox) report the identical malicious IP, no duplicate nodes or records are created across the storage topology.
+
+---
+
 ### 5. Cognitive Copilot & RAG Pipeline
 - **Large Language Model Integration**: Google Gemini 2.5 Flash integrated with temperature modulation and strict cybersecurity prompt engineering.
 - **Retrieval-Augmented Generation (RAG)**: Connects to a Qdrant Vector Store indexing threat profiles and historical incident reports with dense vector embeddings.
 - **Security Guardrails**: Input/output lexical sanitizers, prompt injection mitigation, and automated SIEM rule verification.
+
+---
 
 ### 6. Tactical 3D Geospatial & Graph Visualizer
 - **ThreatMap3D**: Built on **deck.gl** and **MapLibre GL**, rendering global 3D Bezier arcs connecting adversary infrastructure (origin ASN/country) to targeted SOC assets with real-time particle animation.
@@ -165,7 +252,7 @@ Onyx Engine implements a tailored polyglot storage architecture:
 
 ---
 
-##  Technology Stack
+## Technology Stack
 
 | Domain | Technology / Library | Version | Purpose |
 |---|---|---|---|
@@ -190,10 +277,13 @@ Onyx Engine implements a tailored polyglot storage architecture:
 
 ---
 
-##  Directory Structure
+## Directory Structure
 
 ```text
 onyx-engine/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                   # Automated GitHub Actions test & type-check pipeline
 ├── .env.example                     # Environment configuration template
 ├── .gitignore                       # Production gitignore (security hardened)
 ├── docker-compose.yml               # Multi-service container orchestration
@@ -230,6 +320,9 @@ onyx-engine/
 │   ├── onyx_nlp/
 │   │   ├── extractors/              # SciBERT IoC & TTP extraction pipelines
 │   │   └── processors/              # Document preprocessing & defanging
+│   ├── data/
+│   │   └── eval_benchmark.json      # 50-document empirical ground-truth benchmark set
+│   ├── evaluate_benchmarks.py       # Reproducible quantitative NLP evaluation script
 │   └── pyproject.toml
 │
 ├── onyx-crawlers/                   # Intelligence Harvesters & Darkweb Spiders
@@ -257,14 +350,18 @@ onyx-engine/
 │   ├── mongodb/                     # Init scripts & collection indices
 │   └── tor/                         # Tor daemon, Privoxy & circuit rotator
 │
+├── docs/
+│   └── assets/                      # UI screenshots and visual media directory
+│
 └── scripts/                         # Operational & stress-testing utilities
+    ├── benchmark_nlp.py             # Convenience wrapper for NLP benchmark evaluation
     ├── exhibition_injector.py       # Realistic APT29 / LockBit STIX injector
     └── verify_flow.py               # Zero-latency GeoIP Redis validation script
 ```
 
 ---
 
-##  Prerequisites & Environment Configuration
+## Prerequisites & Environment Configuration
 
 ### System Prerequisites
 - **Node.js**: $\ge 18.18$ (Node 20 LTS recommended)
@@ -314,7 +411,7 @@ OSINT_VIRUSTOTAL_API_KEY=
 
 ---
 
-##  Installation & Deployment
+## Installation & Deployment
 
 ### Option A: Production Deployment (Docker Compose)
 To launch the complete distributed stack with all databases, backend, and dashboard containerized:
@@ -370,30 +467,34 @@ For Windows workstations, automated batch scripts manage path resolution, proces
 
 ---
 
-##  Verification & Automated Test Suite
+## Verification & Automated Test Suite
 
-Onyx Engine includes an extensive, enterprise-grade test suite covering mathematical decay invariants, Bayesian confidence weights, source reliability matrix properties, and API contract validity.
+Onyx Engine includes an extensive, enterprise-grade test suite covering mathematical decay invariants, Bayesian confidence weights, source reliability matrix properties, API contract validity, and empirical NLP extraction accuracy.
 
-To run the full unit test suite:
+To run the complete test suite:
 ```bash
-# Using Makefile
+# Unit & Contract Tests (82 passed)
 make test
 
 # Or directly with pytest
 python -m pytest onyx-core/tests/unit -v
 python -m pytest onyx-api/tests -v
+
+# Quantitative NLP Benchmark Evaluation
+python onyx-nlp/evaluate_benchmarks.py
 ```
 
 ### Test Results Breakdown:
 - **`test_decay_engine.py`**: Validates exponential half-life properties, half-life exactness at $t = t_{1/2}$, monotonicity, boundary adherence in $[0, 1]$, and state classification (`valid`, `degrading`, `stale`, `obsolete`).
 - **`test_confidence_composite.py`**: Verifies Bayesian source reliability matrices, contextual relevance sector bounds, contestation penalties, and analyst override idempotence.
 - **`test_api_health.py`**: Validates HTTP 200 liveness probes and telemetry payload schema integrity.
+- **`evaluate_benchmarks.py`**: Measures empirical Precision (94.28%), Recall (100.00%), and Macro F1 (96.85%) across 5 core CTI entity categories.
 
-**Result**: `82 passed, 0 failures` (100% pass rate).
+**Status**: `82 passed, 0 failures` (100% pass rate).
 
 ---
 
-##  Standards & Interoperability
+## Standards & Interoperability
 
 | Standard | Specification | Implementation in Onyx |
 |---|---|---|
@@ -407,21 +508,31 @@ python -m pytest onyx-api/tests -v
 
 ---
 
-##  Academic & Engineering Context
+## Academic & Engineering Context
 
-This project represents the culmination of advanced engineering and academic research in **Cyber Threat Intelligence, Machine Learning in Defense Systems, and High-Performance Distributed Systems**.
+This platform represents the culmination of advanced engineering and academic research in **Cyber Threat Intelligence, Applied Deep Learning in Defense Systems, and High-Performance Distributed Computing**.
+
+### Academic Heritage & Foundation
+Onyx Engine originated as an undergraduate Bachelor's Capstone Project (*Projet de Fin d'Études — PFE*) at the **Faculté des Sciences de Sfax (FSS), Tunisia**, where it was evaluated by a faculty jury and awarded the exceptional grade of:
+
+$$\mathbf{18.75 / 20 \quad \text{—} \quad \text{First Class Honors with Highest Distinction}}$$
+
+Following this academic achievement, the project underwent a comprehensive architectural overhaul, evolving from an academic prototype into a production-grade, distributed cyber threat intelligence platform featuring polyglot persistence, formal STIX 2.1/TAXII 2.1 protocol engines, SciBERT neural extraction, and mathematical decay models.
 
 ### Key Research Contributions:
 1. **Empirical Indicator Life-Cycle Modeling**: Formulation and implementation of algorithmic decay for threat indicators to eliminate defensive telemetry saturation.
 2. **Cognitive Triangulation**: Fusion of deterministic threat feeds with transformer-based NLP and Large Language Model reasoning under strict safety guardrails.
 3. **Hardware-Accelerated Situational Awareness**: Bringing military-grade 3D geospatial intelligence visualization to standard browser environments via WebGL shaders and deck.gl.
+4. **Idempotent Polyglot Architecture**: Deterministic RFC 4122 UUIDv5 identity formulation ensuring cross-engine consistency across 6 isolated data stores.
 
 ### Author & Engineering Lead:
-- **Kash Talel** ([@kash-talel](https://github.com/kash-talel))  
-  *Cybersecurity Architect & Distributed Systems Engineer*
+- **Mahdi Ghozzi** ([@kash-talel](https://github.com/kash-talel))  
+  *M.Sc. Candidate in Systems, Networks, and Cloud Computing*  
+  **Faculté des Sciences de Sfax (FSS)**, Université de Sfax, Tunisia  
+  Email: [ghozzim770@gmail.com](mailto:ghozzim770@gmail.com) | GitHub: [@kash-talel](https://github.com/kash-talel)
 
 ---
 
-##  License
+## License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for complete details.

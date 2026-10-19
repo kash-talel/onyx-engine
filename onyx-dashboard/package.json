@@ -1,6 +1,7 @@
 {
   "name": "onyx-dashboard",
   "version": "3.0.0",
+  "author": "Mahdi Ghozzi <ghozzim770@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",

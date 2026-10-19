@@ -7,6 +7,9 @@ name = "onyx-core"
 version = "3.0.0"
 description = "ONYX CTI Platform — Core domain models, STIX 2.1 schema, and shared services"
 requires-python = ">=3.12"
+authors = [
+    {name = "Mahdi Ghozzi", email = "ghozzim770@gmail.com"}
+]
 license = {text = "Proprietary"}
 
 dependencies = [

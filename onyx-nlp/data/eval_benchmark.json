@@ -1,0 +1,437 @@
+[
+  {
+    "id": "cti-bench-001",
+    "text": "Adversary APT29 deployed WellMess malware targeting European government agencies, exfiltrating credentials to 185.220.101.45 via Spearphishing Attachment T1566.001.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "APT29"},
+      {"category": "Malware", "value": "WellMess"},
+      {"category": "IPv4_IoC", "value": "185.220.101.45"},
+      {"category": "MITRE_TTP", "value": "T1566.001"}
+    ]
+  },
+  {
+    "id": "cti-bench-002",
+    "text": "During the intrusion, Cozy Bear exploited zero-day vulnerability CVE-2023-38831 in WinRAR using Cobalt Strike beacons communicating with C2 server 91.108.56.181.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Cozy Bear"},
+      {"category": "CVE_ID", "value": "CVE-2023-38831"},
+      {"category": "Malware", "value": "Cobalt Strike"},
+      {"category": "IPv4_IoC", "value": "91.108.56.181"}
+    ]
+  },
+  {
+    "id": "cti-bench-003",
+    "text": "Lazarus Group leveraged AppleJeus cryptocurrency-stealer and executed T1059.001 PowerShell scripts against defense contractors connecting to 175.45.176.82.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Lazarus Group"},
+      {"category": "Malware", "value": "AppleJeus"},
+      {"category": "MITRE_TTP", "value": "T1059.001"},
+      {"category": "IPv4_IoC", "value": "175.45.176.82"}
+    ]
+  },
+  {
+    "id": "cti-bench-004",
+    "text": "Threat group APT28 leveraged vulnerability CVE-2023-23397 in Microsoft Outlook to exfiltrate NTLM hashes using Zebrocy payload routed through 194.165.16.78.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "APT28"},
+      {"category": "CVE_ID", "value": "CVE-2023-23397"},
+      {"category": "Malware", "value": "Zebrocy"},
+      {"category": "IPv4_IoC", "value": "194.165.16.78"}
+    ]
+  },
+  {
+    "id": "cti-bench-005",
+    "text": "LockBit 3.0 operators utilized StealBit exfiltration utility to compromise storage servers at 45.33.32.156 prior to deploying Data Encrypted for Impact T1486.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "LockBit 3.0"},
+      {"category": "Malware", "value": "StealBit"},
+      {"category": "IPv4_IoC", "value": "45.33.32.156"},
+      {"category": "MITRE_TTP", "value": "T1486"}
+    ]
+  },
+  {
+    "id": "cti-bench-006",
+    "text": "Sandworm Team executed HermeticWiper destructive malware targeting critical infrastructure, originating from malicious pivot point 88.214.26.15 using T1485 Disk Wipe.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Sandworm Team"},
+      {"category": "Malware", "value": "HermeticWiper"},
+      {"category": "IPv4_IoC", "value": "88.214.26.15"},
+      {"category": "MITRE_TTP", "value": "T1485"}
+    ]
+  },
+  {
+    "id": "cti-bench-007",
+    "text": "Volt Typhoon actors exploited CVE-2023-46805 in Ivanti Connect Secure gateways and established staging persistence on compromised host 104.244.72.115.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Volt Typhoon"},
+      {"category": "CVE_ID", "value": "CVE-2023-46805"},
+      {"category": "IPv4_IoC", "value": "104.244.72.115"}
+    ]
+  },
+  {
+    "id": "cti-bench-008",
+    "text": "FIN7 syndicate deployed DarkGate loader and executed OS Credential Dumping via T1003 targeting financial institutions, contacting drop server 193.180.12.10.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "FIN7"},
+      {"category": "Malware", "value": "DarkGate"},
+      {"category": "MITRE_TTP", "value": "T1003"},
+      {"category": "IPv4_IoC", "value": "193.180.12.10"}
+    ]
+  },
+  {
+    "id": "cti-bench-009",
+    "text": "Attribution to Midnight Blizzard confirmed after observing abuse of CVE-2024-21413 in Microsoft Outlook combined with Process Hollowing T1055.012 techniques.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Midnight Blizzard"},
+      {"category": "CVE_ID", "value": "CVE-2024-21413"},
+      {"category": "MITRE_TTP", "value": "T1055.012"}
+    ]
+  },
+  {
+    "id": "cti-bench-010",
+    "text": "Ransomware group ALPHV deployed BlackCat encryptor alongside Exmatter stealer to exfiltrate 50GB of healthcare data, routing traffic through 198.51.100.44.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "ALPHV"},
+      {"category": "Malware", "value": "BlackCat"},
+      {"category": "Malware", "value": "Exmatter"},
+      {"category": "IPv4_IoC", "value": "198.51.100.44"}
+    ]
+  },
+  {
+    "id": "cti-bench-011",
+    "text": "Fancy Bear actors targeted aerospace contractors using spear-phishing messages with weaponized RTF documents exploiting CVE-2021-40444.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Fancy Bear"},
+      {"category": "CVE_ID", "value": "CVE-2021-40444"}
+    ]
+  },
+  {
+    "id": "cti-bench-012",
+    "text": "Attacker deployed Remcos RAT to victim workstation and opened reverse shell to command node 185.190.140.22 applying Ingress Tool Transfer T1105.",
+    "ground_truth": [
+      {"category": "Malware", "value": "Remcos"},
+      {"category": "IPv4_IoC", "value": "185.190.140.22"},
+      {"category": "MITRE_TTP", "value": "T1105"}
+    ]
+  },
+  {
+    "id": "cti-bench-013",
+    "text": "Campaign attributed to Hidden Cobra weaponized CVE-2021-44228 Log4Shell against Apache servers, staging BLINDINGCAN remote access trojan.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Hidden Cobra"},
+      {"category": "CVE_ID", "value": "CVE-2021-44228"},
+      {"category": "Malware", "value": "BLINDINGCAN"}
+    ]
+  },
+  {
+    "id": "cti-bench-014",
+    "text": "The adversary leveraged T1190 Exploit Public-Facing Application to breach firewall appliance located at 203.0.113.89 deploying QakBot banking trojan.",
+    "ground_truth": [
+      {"category": "MITRE_TTP", "value": "T1190"},
+      {"category": "IPv4_IoC", "value": "203.0.113.89"},
+      {"category": "Malware", "value": "QakBot"}
+    ]
+  },
+  {
+    "id": "cti-bench-015",
+    "text": "Scattered Spider compromised Okta tenant via SIM Swapping and MFA Fatigue T1621, redirecting traffic to attacker infrastructure 149.154.161.220.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Scattered Spider"},
+      {"category": "MITRE_TTP", "value": "T1621"},
+      {"category": "IPv4_IoC", "value": "149.154.161.220"}
+    ]
+  },
+  {
+    "id": "cti-bench-016",
+    "text": "Critical vulnerability CVE-2023-4966 Citrix Bleed was exploited in the wild by LockBit affiliates to harvest active session tokens from 195.12.50.31.",
+    "ground_truth": [
+      {"category": "CVE_ID", "value": "CVE-2023-4966"},
+      {"category": "ThreatActor", "value": "LockBit"},
+      {"category": "IPv4_IoC", "value": "195.12.50.31"}
+    ]
+  },
+  {
+    "id": "cti-bench-017",
+    "text": "RedLine Stealer binary was distributed via YouTube descriptions, sending harvested cryptocurrency keys to C2 host 176.119.159.214.",
+    "ground_truth": [
+      {"category": "Malware", "value": "RedLine"},
+      {"category": "IPv4_IoC", "value": "176.119.159.214"}
+    ]
+  },
+  {
+    "id": "cti-bench-018",
+    "text": "Attribution: NOBELIUM staged customized malware Envoy on compromised Active Directory domain controllers leveraging CVE-2022-26923.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "NOBELIUM"},
+      {"category": "Malware", "value": "Envoy"},
+      {"category": "CVE_ID", "value": "CVE-2022-26923"}
+    ]
+  },
+  {
+    "id": "cti-bench-019",
+    "text": "Emotet botnet operators resumed spam campaigns pushing password-protected zip archives containing malicious VBScript dropped onto 212.102.40.75.",
+    "ground_truth": [
+      {"category": "Malware", "value": "Emotet"},
+      {"category": "IPv4_IoC", "value": "212.102.40.75"}
+    ]
+  },
+  {
+    "id": "cti-bench-020",
+    "text": "Sandworm Team triggered CaddyWiper wiping routines across Ukrainian power distribution systems utilizing Scheduled Task T1053 for execution.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Sandworm Team"},
+      {"category": "Malware", "value": "CaddyWiper"},
+      {"category": "MITRE_TTP", "value": "T1053"}
+    ]
+  },
+  {
+    "id": "cti-bench-021",
+    "text": "Intrusion analysis identified AgentTesla spyware gathering keystrokes and exfiltrating over SMTP to relay server 185.173.35.43.",
+    "ground_truth": [
+      {"category": "Malware", "value": "AgentTesla"},
+      {"category": "IPv4_IoC", "value": "185.173.35.43"}
+    ]
+  },
+  {
+    "id": "cti-bench-022",
+    "text": "Adversary used T1078 Valid Accounts to establish lateral movement across Azure cloud tenancy, communicating with staging host 194.26.29.112.",
+    "ground_truth": [
+      {"category": "MITRE_TTP", "value": "T1078"},
+      {"category": "IPv4_IoC", "value": "194.26.29.112"}
+    ]
+  },
+  {
+    "id": "cti-bench-023",
+    "text": "Diamond Sleet adversaries weaponized CVE-2023-42793 JetBrains TeamCity vulnerability to hijack continuous integration build pipelines.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Diamond Sleet"},
+      {"category": "CVE_ID", "value": "CVE-2023-42793"}
+    ]
+  },
+  {
+    "id": "cti-bench-024",
+    "text": "Warzone RAT payload was injected into explorer.exe process memory using Native API T1106 on infected endpoints talking to 45.142.122.9.",
+    "ground_truth": [
+      {"category": "Malware", "value": "Warzone RAT"},
+      {"category": "MITRE_TTP", "value": "T1106"},
+      {"category": "IPv4_IoC", "value": "45.142.122.9"}
+    ]
+  },
+  {
+    "id": "cti-bench-025",
+    "text": "Cl0p ransomware gang leveraged zero-day flaw CVE-2023-34362 MOVEit Transfer to exfiltrate terabytes of corporate data from 146.70.165.22.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Cl0p"},
+      {"category": "CVE_ID", "value": "CVE-2023-34362"},
+      {"category": "IPv4_IoC", "value": "146.70.165.22"}
+    ]
+  },
+  {
+    "id": "cti-bench-026",
+    "text": "Threat group APT29 conducted credential harvesting campaigns using fake Microsoft login pages hosted at defanged IP 194[.]32[.]78[.]112.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "APT29"},
+      {"category": "IPv4_IoC", "value": "194.32.78.112"}
+    ]
+  },
+  {
+    "id": "cti-bench-027",
+    "text": "Ransomware strain Black Basta executed PowerShell commands T1059.001 to disable Windows Defender before deploying primary encryptor.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Black Basta"},
+      {"category": "MITRE_TTP", "value": "T1059.001"}
+    ]
+  },
+  {
+    "id": "cti-bench-028",
+    "text": "Security bulletin warns of active exploitation of CVE-2024-1709 Authentication Bypass in ConnectWise ScreenConnect software.",
+    "ground_truth": [
+      {"category": "CVE_ID", "value": "CVE-2024-1709"}
+    ]
+  },
+  {
+    "id": "cti-bench-029",
+    "text": "IcedID banking trojan downloader established SSL connection to malicious controller 185.70.184.8 applying Command and Control T1071.",
+    "ground_truth": [
+      {"category": "Malware", "value": "IcedID"},
+      {"category": "IPv4_IoC", "value": "185.70.184.8"},
+      {"category": "MITRE_TTP", "value": "T1071"}
+    ]
+  },
+  {
+    "id": "cti-bench-030",
+    "text": "Akira ransomware group gained initial perimeter access via compromised Cisco VPN gateways without MFA at 193.32.162.77.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Akira"},
+      {"category": "IPv4_IoC", "value": "193.32.162.77"}
+    ]
+  },
+  {
+    "id": "cti-bench-031",
+    "text": "Exploitation of CVE-2022-30190 Follina Microsoft Support Diagnostic Tool MSDT vulnerability observed in APT28 operations.",
+    "ground_truth": [
+      {"category": "CVE_ID", "value": "CVE-2022-30190"},
+      {"category": "ThreatActor", "value": "APT28"}
+    ]
+  },
+  {
+    "id": "cti-bench-032",
+    "text": "AsyncRAT client configured with AES-256 encrypted payload beaconed to dynamic DNS endpoint resolving to 94.156.65.111.",
+    "ground_truth": [
+      {"category": "Malware", "value": "AsyncRAT"},
+      {"category": "IPv4_IoC", "value": "94.156.65.111"}
+    ]
+  },
+  {
+    "id": "cti-bench-033",
+    "text": "Adversary utilized T1547.001 Registry Run Keys / Startup Folder to maintain persistent presence on compromised domain server 172.67.182.91.",
+    "ground_truth": [
+      {"category": "MITRE_TTP", "value": "T1547.001"},
+      {"category": "IPv4_IoC", "value": "172.67.182.91"}
+    ]
+  },
+  {
+    "id": "cti-bench-034",
+    "text": "Forest Blizzard targeted European policy think tanks using Custom Droppers weaponized through CVE-2023-38831.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Forest Blizzard"},
+      {"category": "CVE_ID", "value": "CVE-2023-38831"}
+    ]
+  },
+  {
+    "id": "cti-bench-035",
+    "text": "Vidar Stealer unpacked in memory and transmitted browser cookies and telegram sessions to endpoint 195.201.225.248.",
+    "ground_truth": [
+      {"category": "Malware", "value": "Vidar"},
+      {"category": "IPv4_IoC", "value": "195.201.225.248"}
+    ]
+  },
+  {
+    "id": "cti-bench-036",
+    "text": "Incident response team detected T1055 Process Injection into svchost.exe initiated by unknown adversary from 185.161.248.64.",
+    "ground_truth": [
+      {"category": "MITRE_TTP", "value": "T1055"},
+      {"category": "IPv4_IoC", "value": "185.161.248.64"}
+    ]
+  },
+  {
+    "id": "cti-bench-037",
+    "text": "Chinese state-sponsored group Volt Typhoon established operational relay boxes using compromised Netgear routers at 64.227.64.12.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Volt Typhoon"},
+      {"category": "IPv4_IoC", "value": "64.227.64.12"}
+    ]
+  },
+  {
+    "id": "cti-bench-038",
+    "text": "Attackers chained CVE-2023-27997 Fortinet FortiOS SSL-VPN remote code execution with T1021 Remote Services to pivot laterally.",
+    "ground_truth": [
+      {"category": "CVE_ID", "value": "CVE-2023-27997"},
+      {"category": "MITRE_TTP", "value": "T1021"}
+    ]
+  },
+  {
+    "id": "cti-bench-039",
+    "text": "Ransomware operation Play utilized System Information Discovery T1082 before executing GobaLoader staging modules.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Play"},
+      {"category": "MITRE_TTP", "value": "T1082"},
+      {"category": "Malware", "value": "GobaLoader"}
+    ]
+  },
+  {
+    "id": "cti-bench-040",
+    "text": "SocGholish fake browser update infection chains delivered NetSupport RAT onto corporate endpoint 89.208.107.195.",
+    "ground_truth": [
+      {"category": "Malware", "value": "SocGholish"},
+      {"category": "Malware", "value": "NetSupport"},
+      {"category": "IPv4_IoC", "value": "89.208.107.195"}
+    ]
+  },
+  {
+    "id": "cti-bench-041",
+    "text": "Vulnerability CVE-2024-21887 in Ivanti Policy Secure allows command injection leading to root shell execution.",
+    "ground_truth": [
+      {"category": "CVE_ID", "value": "CVE-2024-21887"}
+    ]
+  },
+  {
+    "id": "cti-bench-042",
+    "text": "Threat actor FIN7 leveraged Diceloader payload to inject malicious DLL into rundll32.exe communicating with 194.87.139.190.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "FIN7"},
+      {"category": "Malware", "value": "Diceloader"},
+      {"category": "IPv4_IoC", "value": "194.87.139.190"}
+    ]
+  },
+  {
+    "id": "cti-bench-043",
+    "text": "Lazarus Group conducted FASTCash campaign targeting automated teller machines across Asia connecting through 175.45.178.10.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Lazarus Group"},
+      {"category": "Malware", "value": "FASTCash"},
+      {"category": "IPv4_IoC", "value": "175.45.178.10"}
+    ]
+  },
+  {
+    "id": "cti-bench-044",
+    "text": "Spearphishing Link T1566.002 emails directed users to phishing infrastructure at 141.98.11.23 exploiting CVE-2023-36884.",
+    "ground_truth": [
+      {"category": "MITRE_TTP", "value": "T1566.002"},
+      {"category": "IPv4_IoC", "value": "141.98.11.23"},
+      {"category": "CVE_ID", "value": "CVE-2023-36884"}
+    ]
+  },
+  {
+    "id": "cti-bench-045",
+    "text": "DarkSide ransomware successor BlackCat encrypted virtual hypervisors using specialized ESXi payload routed via 185.220.101.5.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "BlackCat"},
+      {"category": "IPv4_IoC", "value": "185.220.101.5"}
+    ]
+  },
+  {
+    "id": "cti-bench-046",
+    "text": "APT28 actors weaponized X-Agent trojan against defense ministry personnel using defanged C2 address 194[.]165[.]16[.]99.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "APT28"},
+      {"category": "Malware", "value": "X-Agent"},
+      {"category": "IPv4_IoC", "value": "194.165.16.99"}
+    ]
+  },
+  {
+    "id": "cti-bench-047",
+    "text": "Adversary performed Deobfuscate/Decode Files or Information T1140 on base64 encoded payload received from 109.236.88.75.",
+    "ground_truth": [
+      {"category": "MITRE_TTP", "value": "T1140"},
+      {"category": "IPv4_IoC", "value": "109.236.88.75"}
+    ]
+  },
+  {
+    "id": "cti-bench-048",
+    "text": "Critical zero-day vulnerability CVE-2024-3400 in Palo Alto Networks PAN-OS allows unauthenticated arbitrary command execution.",
+    "ground_truth": [
+      {"category": "CVE_ID", "value": "CVE-2024-3400"}
+    ]
+  },
+  {
+    "id": "cti-bench-049",
+    "text": "Sandworm Team launched Industroyer2 targeting industrial control systems with IEC-104 protocol telecontrol commands from 185.143.223.12.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "Sandworm Team"},
+      {"category": "Malware", "value": "Industroyer2"},
+      {"category": "IPv4_IoC", "value": "185.143.223.12"}
+    ]
+  },
+  {
+    "id": "cti-bench-050",
+    "text": "APT29 Cozy Bear operators deployed Duke malware family abusing T1071 Application Layer Protocol to communicate with 185.220.101.70.",
+    "ground_truth": [
+      {"category": "ThreatActor", "value": "APT29"},
+      {"category": "ThreatActor", "value": "Cozy Bear"},
+      {"category": "Malware", "value": "Duke"},
+      {"category": "MITRE_TTP", "value": "T1071"},
+      {"category": "IPv4_IoC", "value": "185.220.101.70"}
+    ]
+  }
+]
