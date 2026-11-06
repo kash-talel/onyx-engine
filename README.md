@@ -18,6 +18,8 @@
 > **"Conception et développement d'une plateforme de renseignement sur les cybermenaces (CTI) avec surveillance automatisée du Dark Web"**  
 > Co-authored by **Mahdi Ghozzi** ([@kash-talel](https://github.com/kash-talel)) and **Amal Karaoud**, defended on **June 18, 2026** at the **Faculté des Sciences de Sfax (FSS), University of Sfax** in partnership with **IRS Technologie**, and graded **18.75 / 20**.  
 > The official 105-page thesis report is archived directly in this repository: [`docs/pfe_report.pdf`](docs/pfe_report.pdf).
+>
+> **How it was built**: designed and implemented by the two authors; parts of the code were written with the help of AI coding assistants, and all of it was reviewed, integrated and tested by the authors.
 
 ---
 
