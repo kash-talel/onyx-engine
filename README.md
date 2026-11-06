@@ -1,9 +1,9 @@
-# Onyx Engine — Sovereign Cyber Threat Intelligence Platform
+# Onyx Engine — Cyber Threat Intelligence Platform (Graduation Project)
 
-[![Thesis Defense Grade](https://img.shields.io/badge/Thesis%20Defense-18.75%2F20%20(Honors)-gold?style=for-the-badge&logo=academia)](docs/pfe_report.pdf)
+[![Thesis Defense Grade](https://img.shields.io/badge/Graduation%20Project-18.75%2F20-gold?style=for-the-badge&logo=academia)](docs/pfe_report.pdf)
 [![PFE Report](https://img.shields.io/badge/Official%20Report-105%20Pages%20PDF-red?style=for-the-badge&logo=adobe-acrobat-reader)](docs/pfe_report.pdf)
 [![Build & Test Status](https://img.shields.io/badge/tests-89%20passed-brightgreen?style=for-the-badge&logo=pytest)](https://github.com/kash-talel/onyx-engine)
-[![NLP F1-Score](https://img.shields.io/badge/NLP%20F1--Score-96.85%25-blueviolet?style=for-the-badge)](https://github.com/kash-talel/onyx-engine)
+[![NLP F1-Score](https://img.shields.io/badge/NLP%20F1%20(internal%20benchmark)-96.85%25-blueviolet?style=for-the-badge)](https://github.com/kash-talel/onyx-engine)
 [![Python Version](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB?style=for-the-badge&logo=python)](https://www.python.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%20Strict-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -12,11 +12,11 @@
 [![OASIS STIX 2.1](https://img.shields.io/badge/OASIS-STIX%202.1%20Compliant-orange?style=for-the-badge)](https://oasis-open.github.io/cti-documentation/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
-> **Onyx Engine (ONYX CTI v3.0 Genesis)** is an enterprise-grade, sovereign Cyber Threat Intelligence (CTI) ingestion, correlation, and cognitive analysis platform. Engineered for modern Security Operations Centers (SOC), Computer Emergency Response Teams (CERT), and threat hunting units, Onyx aggregates and synthesizes telemetry from 15+ real-time OSINT feeds, deploys an autonomous dark web crawler fleet across Tor `.onion` networks, applies scientific NLP (SciBERT) for unstructured intelligence extraction, executes automated half-life decay modeling on Indicators of Compromise (IoCs), and provides an immersive 3D/geospatial tactical operating picture.
+> **Onyx Engine (ONYX CTI v3.0 Genesis)** is a Cyber Threat Intelligence (CTI) platform built as a two-person graduation project. It collects indicators from public OSINT feeds and from Tor-hosted sources, extracts entities from unstructured text with regular expressions and a SciBERT model, scores indicators and ages them with a half-life decay model, and presents the results in a web dashboard with graph and map views. It is a research prototype, not a production system.
 >
-> **Academic Origin**: Onyx Engine represents the production-grade realization of the defended Bachelor's Thesis (*Projet de Fin d'Études — PFE*) entitled:  
+> **Academic Origin**: Onyx Engine is the implementation of the defended Bachelor's graduation project (*Projet de Fin d'Études — PFE*) entitled:  
 > **"Conception et développement d'une plateforme de renseignement sur les cybermenaces (CTI) avec surveillance automatisée du Dark Web"**  
-> Co-authored by **Mahdi Ghozzi** ([@kash-talel](https://github.com/kash-talel)) and **Amal Karaoud**, defended on **June 18, 2026** at the **Faculté des Sciences de Sfax (FSS), University of Sfax** in partnership with **IRS Technologie**, and awarded **18.75 / 20 (First Class Honors with Highest Distinction)**.  
+> Co-authored by **Mahdi Ghozzi** ([@kash-talel](https://github.com/kash-talel)) and **Amal Karaoud**, defended on **June 18, 2026** at the **Faculté des Sciences de Sfax (FSS), University of Sfax** in partnership with **IRS Technologie**, and graded **18.75 / 20**.  
 > The official 105-page thesis report is archived directly in this repository: [`docs/pfe_report.pdf`](docs/pfe_report.pdf).
 
 ---
@@ -168,7 +168,7 @@ As validated in Chapter 3, Section 4.1 of the thesis report, Onyx separates proc
 
 1. **Stage 1: Deterministic Regex Cascade & Refanging Middleware**:
    - **Throughput**: **>8,200 documents/second** (Mean Latency: **~0.12 ms/document**).
-   - **Scope**: Extracts RFC-compliant network syntaxes (IPv4, IPv6, CIDR, MD5, SHA-1, SHA-256, SHA-512, CVE IDs, MITRE technique tags) and executes lexical defanging/refanging (`hxxp[://]bad[.]com` $\to$ `http://bad.com`). Guaranteed 100% precision with zero tokenization distortion.
+   - **Scope**: Extracts RFC-compliant network syntaxes (IPv4, IPv6, CIDR, MD5, SHA-1, SHA-256, SHA-512, CVE IDs, MITRE technique tags) and executes lexical defanging/refanging (`hxxp[://]bad[.]com` $\to$ `http://bad.com`). Rule-based, so results are predictable for these strict formats.
 2. **Stage 2: 12-Layer SciBERT WordPiece Tokenization & 768-Dim `[CLS]` Semantic Embedding**:
    - **Latency**: **24.60 ms/document** on single-core CPU / **3.80 ms/document** batched on NVIDIA CUDA GPU.
    - **Scope**: Deep textual Named Entity Recognition (ThreatActor and Malware family disambiguation in dense prose). The 768-dimensional `[CLS]` dense vector embedding generated by SciBERT is indexed directly into the **Qdrant Vector Database** using Cosine Similarity (`M=16, efConstruction=100`), powering the Cognitive Copilot's semantic memory and Retrieval-Augmented Generation (RAG).
@@ -191,7 +191,7 @@ The extraction pipeline was quantitatively validated against a curated ground-tr
 Standard language models (such as `bert-base-uncased` trained on Wikipedia/BookCorpus) suffer from acute tokenization pathology when applied to dense technical vulnerability disclosures:
 1. **Token Fragmentation**: Generic WordPiece tokenizers shatter domain-specific cryptographic hashes, CVE strings, and zero-day identifiers into fragmented subwords (`cve-2023-38831` becomes `['cv', '##e', '-', '202', '##3', '-', '38', '##83', '##1']`), diluting self-attention weights and crippling boundary detection.
 2. **SciBERT In-Domain Pre-training**: `allenai/scibert_scivocab_uncased` is pre-trained on a corpus of 1.14M scientific and computer science papers. Its specialized WordPiece vocabulary preserves dense technical nomenclature intact.
-3. **Neuro-Symbolic Triangulation**: While deep neural transformers excel at contextual semantic disambiguation (differentiating between *Bear* as an animal vs. *Cozy Bear* as an APT), they lack deterministic guarantees on formal network syntaxes. Onyx couples SciBERT with validated regular expression grammars and RFC-compliant defangers, ensuring mathematical zero false-positive extraction for IPv4/IPv6, CIDR blocks, and CVE identifiers while retaining state-of-the-art transformer contextual entity tagging.
+3. **Neuro-Symbolic Triangulation**: While deep neural transformers excel at contextual semantic disambiguation (differentiating between *Bear* as an animal vs. *Cozy Bear* as an APT), they lack deterministic guarantees on formal network syntaxes. Onyx couples SciBERT with validated regular expression grammars and RFC-compliant defangers, which keeps false positives low for strictly formatted values (IPv4/IPv6, CIDR blocks, CVE identifiers) while the transformer handles context-dependent entities.
 
 ---
 
@@ -307,7 +307,7 @@ In a distributed event-driven pipeline, worker retries and overlapping OSINT fee
 
 ### 5. 4-Tier Graceful Degradation Fault-Tolerance Cascade
 
-To guarantee uninterrupted situational awareness for SOC operators even during catastrophic cloud disconnects or database service outages, Onyx Engine implements the **4-Tier Graceful Degradation Cascade** validated in Chapter 4 (Section 3, Figure 4.14) of the PFE report:
+To keep the dashboard usable when a database or the network is unavailable, Onyx Engine implements the **4-Tier Graceful Degradation Cascade** validated in Chapter 4 (Section 3, Figure 4.14) of the PFE report:
 
 ```mermaid
 flowchart TD
@@ -326,7 +326,7 @@ flowchart TD
 | **Level 1** | **Redis 7 In-Memory Hot Cache & Pub/Sub Bus** | $< 2\,\text{ms}$ | High-frequency telemetry cache, active WebSocket connection hubs, and real-time threat score counters. |
 | **Level 2** | **Polyglot Database Stack** | $10 - 50\,\text{ms}$ | Full multi-engine persistence (MongoDB 7, Neo4j 5, Elasticsearch 8, Qdrant, PostgreSQL 15). Executes multi-hop graph traversals, vector search, and full-text queries. |
 | **Level 3** | **FastAPI ASGI In-Memory Operational Snapshot** | $< 1\,\text{ms}$ | If database containers become unreachable, the backend API serves cached internal data structures containing the latest verified system state without crashing. |
-| **Level 4** | **Air-Gapped Pre-Verified Historical STIX Cache** | Offline Local Disk | Built-in offline STIX 2.1 bundles (`exhibition_injector.py`, MaxMind GeoLite2 City offline database) guaranteeing that the SOC Cockpit and 3D Threat Map display rich, actionable intelligence even on isolated air-gapped defense networks. |
+| **Level 4** | **Local Pre-Loaded STIX Cache** | Offline Local Disk | Built-in offline STIX 2.1 bundles (`exhibition_injector.py`, MaxMind GeoLite2 City offline database) so the dashboard and threat map still display demo data when the machine is offline. |
 
 ---
 
@@ -561,7 +561,7 @@ For Windows workstations, automated batch scripts manage path resolution, proces
 
 ## Verification & Automated Test Suite
 
-Onyx Engine includes an extensive, enterprise-grade test suite covering mathematical decay invariants, Bayesian confidence weights, source reliability matrix properties, API contract validity, and empirical NLP extraction accuracy.
+Onyx Engine includes a test suite covering mathematical decay invariants, Bayesian confidence weights, source reliability matrix properties, API contract validity, and empirical NLP extraction accuracy.
 
 To run the complete test suite:
 ```bash
@@ -580,7 +580,7 @@ python onyx-nlp/evaluate_benchmarks.py
 - **`test_decay_engine.py`**: Validates exponential half-life properties, half-life exactness at $t = t_{1/2}$, monotonicity, boundary adherence in $[0, 1]$, and state classification (`valid`, `degrading`, `stale`, `obsolete`).
 - **`test_confidence_composite.py`**: Verifies Bayesian source reliability matrices, contextual relevance sector bounds, contestation penalties, and analyst override idempotence.
 - **`test_api_health.py`**: Validates HTTP 200 liveness probes and telemetry payload schema integrity.
-- **`evaluate_benchmarks.py`**: Validates empirical Precision (94.28%), Recall (100.00%), and Macro F1 (96.85%) across 5 core CTI entity categories, separating Stage 1 regex (~0.12 ms) from Stage 2 SciBERT transformer forward pass (24.6 ms).
+- **`evaluate_benchmarks.py`**: Reports, on the project's internal labelled sample, Precision (94.28%), Recall (100.00%), and Macro F1 (96.85%) across 5 core CTI entity categories, separating Stage 1 regex (~0.12 ms) from Stage 2 SciBERT transformer forward pass (24.6 ms).
 
 **Status**: `89 passed, 0 failures` (100% pass rate).
 
@@ -602,16 +602,16 @@ python onyx-nlp/evaluate_benchmarks.py
 
 ## Academic Heritage & Defense Jury
 
-This platform represents the culmination of advanced engineering and academic research in **Cyber Threat Intelligence, Applied Deep Learning in Defense Systems, and High-Performance Distributed Computing**.
+This platform was developed as a Bachelor's graduation project in **cyber threat intelligence, applied NLP and distributed systems**.
 
 ### Academic & Industrial Defense Metadata:
 - **Official Thesis Title**:  
   *« Conception et développement d'une plateforme de renseignement sur les cybermenaces (CTI) avec surveillance automatisée du Dark Web »*
-- **Degree Awarded**: Bachelor's Degree in Computer Science (*Diplôme National de Licence en Sciences de l'Informatique*)
+- **Degree**: Licence in Computer Systems Engineering, Network and Systems Engineering (*Licence en Ingénierie des Systèmes Informatiques*)
 - **Academic Institution**: **Faculté des Sciences de Sfax (FSS)**, University of Sfax, Tunisia — Department of Computer Science and Communications
 - **Defense Date**: **June 18, 2026**
 - **Official Evaluation & Grade**:  
-  $$\mathbf{18.75 / 20 \quad \text{—} \quad \text{First Class Honors with Highest Distinction}} \quad (\textit{Mention Très Bien avec Félicitations du Jury})$$
+  **18.75 / 20**
 - **Industrial R&D Host**: **IRS Technologie** (Sfax, Tunisia — founded 1995, specializing in network infrastructure, IP telephony, and cybersecurity systems integration).
 - **Official Defense Jury & Supervision**:
   - **Academic Supervisor**: **Prof. Emna Charfi Ep Hammami** (Faculté des Sciences de Sfax)
@@ -621,7 +621,7 @@ This platform represents the culmination of advanced engineering and academic re
 
 ### Lead Authors & Co-Creators:
 - **Mahdi Ghozzi** ([@kash-talel](https://github.com/kash-talel))  
-  *M.Sc. Candidate in Systems, Networks, and Cloud Computing*  
+  *Master's student, Systems, Networks and Cloud Computing*  
   Faculté des Sciences de Sfax (FSS), Université de Sfax, Tunisia  
   Email: [ghozzim770@gmail.com](mailto:ghozzim770@gmail.com) | GitHub: [@kash-talel](https://github.com/kash-talel)
 - **Amal Karaoud**  
@@ -629,7 +629,7 @@ This platform represents the culmination of advanced engineering and academic re
   Faculté des Sciences de Sfax (FSS), Université de Sfax, Tunisia
 
 ### Thesis Archival:
-The complete, unabridged 105-page defense thesis document is archived directly within this repository:  
+The 105-page thesis report is archived directly within this repository:  
 👉 **[Read the Full PFE Thesis Report (`docs/pfe_report.pdf`)](docs/pfe_report.pdf)**
 
 ---
